@@ -45,6 +45,7 @@ public struct _PickerContainer<
 public struct _PickerElement: _PrimitiveView {
   public let valueIndex: Int?
   public let content: AnyView
+  public let initialSelection: Bool
   @Environment(\.pickerStyle) public var style
 }
 
@@ -78,10 +79,16 @@ public struct Picker<Label: View, SelectionValue: Hashable, Content: View>: View
           let nestedChildren = forEach.children
 
           ForEach(0..<nestedChildren.count) { nestedIndex in
-            _PickerElement(valueIndex: nestedIndex, content: nestedChildren[nestedIndex])
+            let selected = (selection.wrappedValue as? Int)
+            _PickerElement(
+              valueIndex: nestedIndex,
+              content: nestedChildren[nestedIndex],
+              initialSelection: selected == nestedIndex
+            )
           }
         } else {
-          _PickerElement(valueIndex: nil, content: children[index])
+          // will be shown as the initial selection anyway if none above is
+          _PickerElement(valueIndex: nil, content: children[index], initialSelection: false)
         }
       }
     }

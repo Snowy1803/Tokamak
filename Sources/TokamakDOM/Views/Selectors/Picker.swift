@@ -36,11 +36,14 @@ extension _PickerContainer: DOMPrimitive {
 
 extension _PickerElement: DOMPrimitive {
   var renderedBody: AnyView {
-    let attributes: [HTMLAttribute: String]
+    var attributes: [HTMLAttribute: String]
     if let value = valueIndex {
       attributes = [.value: "\(value)"]
     } else {
       attributes = [:]
+    }
+    if initialSelection {
+      attributes["selected"] = "selected"
     }
 
     return AnyView(HTML("option", attributes) {
