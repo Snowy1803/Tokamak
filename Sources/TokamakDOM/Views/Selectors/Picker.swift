@@ -43,7 +43,7 @@ extension _PickerElement: DOMPrimitive {
       attributes = [:]
     }
     if initialSelection {
-      attributes["selected"] = "selected"
+      attributes[HTMLAttribute("selected", isUpdatedAsProperty: true)] = "selected"
     }
 
     return AnyView(HTML("option", attributes) {
